@@ -1,5 +1,4 @@
 <?php
-
 namespace Blubrry\REST\Resource;
 
 /**
@@ -14,26 +13,18 @@ class Social {
      * @since 1.0.0
      *
      * @param string $program_keyword
-     * @param JSON $body
+     * @param array $body
+     *
+     * @return array The API response.
      */
     public function updateListing($program_keyword, $body) {
-        $path = "/2/social/$program_keyword/update-listing.json";
+        $path = '/2/social/' . $program_keyword . '/update-listing.json';
 
         $required = array(
-            "title",
-            "date",
-            "media-url",
-            "filesize",
-        );
-
-        $optional = array(
-            "feed-url",
-            "guid",
-            "subtitle",
-            "duration",
-            "explicit",
-            "link",
-            "image",
+            'title',
+            'date',
+            'media-url',
+            'filesize',
         );
 
         foreach ($required as $item) {
@@ -52,9 +43,11 @@ class Social {
      *
      * @param string $program_keyword
      * @param array $params
+     *
+     * @return array The API response.
      */
     public function getSocial($program_keyword, $params) {
-        $path = "/2/social/$program_keyword/get-social-options.json"
+        $path = '/2/social/' . $program_keyword . '/get-social-options.json';
 
         return \Blubrry\REST\API::request($path, 'GET');
     }
@@ -65,17 +58,19 @@ class Social {
      * @since 1.0.0
      *
      * @param string $program_keyword
-     * @param JSON $body
+     * @param array $body
+     *
+     * @return array The API response.
      */
     public function postSocial($program_keyword, $body) {
-        $path="/2/social/$program_keyword/post.json";
+        $path='/2/social/' . $program_keyword . '/post.json';
     
         $required=array(
-            "podcast-id",
-            "post-data",
-            "social-id",
-            "social-type",
-            "social-data",
+            'podcast-id',
+            'post-data',
+            'social-id',
+            'social-type',
+            'social-data',
         );
     
         foreach ($required as $item) {
