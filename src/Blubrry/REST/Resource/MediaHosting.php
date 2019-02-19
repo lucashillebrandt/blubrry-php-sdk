@@ -1,5 +1,4 @@
 <?php
-
 namespace Blubrry\REST\Resource;
 
 /**
