@@ -3,121 +3,177 @@
 namespace Blubrry\REST\Resource;
 
 /**
- * MediaHosting class 
+ * MediaHosting class
  *
  * @package Blubrry\REST\Resource
  */
 class MediaHosting {
-    public function list_programs($limit = 100, $start = 0) {
-        # path: /2/media/index.json
-        # method: GET
-        # params: limit (optional), start (optional).
+    /**
+     * List Programs.
+     *
+     * @since 1.0.0
+     *
+     * @param int $limit
+     * @param int $start
+     *
+     * @return array The API response.
+     */
+    public function listPrograms($limit = 100, $start = 0) {
+        $path='/2/media/index.json?limit=' . $limit . '&start=' . $start;
 
-        $path="/2/media/index.json?limit=$limit&start=$start";
-
-        return \Blubrry\REST\API::request( $path, 'GET' );
+        return \Blubrry\REST\API::request($path, 'GET');
     }
 
-    public function list_unpublished($program_keyword, $limit = 100, $start = 0) {
-        # path: /2/media/program_keyword/index.json
-        # method: GET
-        # params: program_keyword (required), limit (optional), start (optional).
-        
-        $path="/2/media/$program_keyword/index.json?limit=$limit&start=$start";
+    /**
+     * List Umpublished Media.
+     *
+     * @since 1.0.0
+     *
+     * @param string $program_keyword
+     * @param int $limit
+     * @param int $start
+     *
+     * @return array The API response.
+     */
+    public function listUnpublished($program_keyword, $limit = 100, $start = 0) {
+        $path='/2/media/' . $program_keyword . '/index.json?limit=' . $limit . '&start=' . $start;
 
-        return \Blubrry\REST\API::request( $path, 'GET' );
+        return \Blubrry\REST\API::request($path, 'GET');
     }
 
-    public function publish_media($program_keyword, $mediafile, $publish = false) {
-        # path: /2/media/my_program/mediafile.ext?format=json
-        # method: GET
-        # params: mediafile.ext, program_keyword
+    /**
+     * Publish Media.
+     *
+     * @since 1.0.0
+     *
+     * @param string $program_keyword
+     * @param string $mediafile
+     * @param bool $publish
+     *
+     * @return array The API response.
+     */
+    public function publishMedia($program_keyword, $mediafile, $publish = false) {
+        $path='/2/media/'. $program_keyword . '/' . $mediafile . '?format=json&publish=' . $publish;
 
-        $path="/2/media/$program_keyword/$mediafile?format=json&publish=$publish";
-
-        return \Blubrry\REST\API::request( $path, 'GET' );
+        return \Blubrry\REST\API::request($path, 'GET');
     }
 
-    public function delete_media($program_keyword, $mediafile) {
-        # path: /2/media/program_keyword/mediafile.ext?format=json
-        # method: DELETE
-        # params: mediafile.ext, program_keyword
+    /**
+     * Delete Media.
+     *
+     * @since 1.0.0
+     *
+     * @param string $program_keyword
+     * @param string $mediafile
+     *
+     * @return array The API response.
+     */
+    public function deleteMedia($program_keyword, $mediafile) {
+        $path='/2/media/' . $program_keyword . '/' . $mediafile . '?format=json';
 
-        $path="/2/media/$program_keyword/$mediafile?format=json";
-
-        return \Blubrry\REST\API::request( $path, 'DELETE' );
+        return \Blubrry\REST\API::request($path, 'DELETE');
     }
 
-    public function add_migrate_media_url( $program_keyword, $url = null, $urls = null) {
-        # path: /2/media/program_keyword/migrate_add.json
-        # method: POST
-        # params: program_keyword, URL, URLS(separated by new lines)
+    /**
+     * Adds media URLs to the migration queue.
+     *
+     * @since 1.0.0
+     *
+     * @param string $program_keyword
+     * @param string $url
+     * @param array $urls
+     *
+     * @return array The API response.
+     */
+    public function addMigrateMediaUrl($program_keyword, $url = null, $urls = null) {
+        $path='/2/media/' . $program_keyword . '/migrate_add.json';
 
-        $path="/2/media/$program_keyword/migrate_add.json";
-
-        if ( ! is_null($url) ) {
+        if (! is_null($url)) {
             $body = array(
-                "url" => $url,
+                'url' => $url,
             );
         }
 
-        if ( ! empty( $urls ) ) {
+        if (! empty($urls)) {
             $body = array(
-                "urls" => $urls, 
+                'urls' => $urls,
             );
         }
 
-        return \Blubrry\REST\API::request( $path, 'POST', $body );
+        return \Blubrry\REST\API::request($path, 'POST', $body);
     }
 
-    public function remove_migrate_media_url($program_keyword, $url = null, $urls = null, $ids = null) {
-        # path: /2/media/program_keyword/migrate_remove.json
-        # method: POST
-        # params: program_keyword, url,urls,ids
+    /**
+     * Remove media URLs from the migration queue.
+     *
+     * @since 1.0.0
+     *
+     * @param string $program_keyword
+     * @param string $url
+     * @param array $urls
+     * @param array $ids
+     *
+     * @return array The API response.
+     */
+    public function removeMigrateMediaUrl($program_keyword, $url = null, $urls = null, $ids = null) {
+        $path = '/2/media/' . $program_keyword . '/migrate_remove.json';
 
-        $path = "/2/media/$program_keyword/migrate_remove.json";
-
-        if ( ! is_null($url) ) {
+        if (! is_null($url)) {
             $body = array(
-                "url" => $url,
-                "ids" => $ids,
+                'url' => $url,
+                'ids' => $ids,
             );
         }
 
-        if ( ! empty( $urls ) ) {
+        if (! empty($urls)) {
             $body = array(
-                "urls" => $urls,
-                "ids"  => $ids, 
+                'urls' => $urls,
+                'ids'  => $ids,
             );
         }
 
-        return \Blubrry\REST\API::request( $path, 'POST', $body);
+        return \Blubrry\REST\API::request($path, 'POST', $body);
     }
 
-    public function migrate_status($program_keyword, $status = "", $start = 0, $limit = 100, $ids) {
-        # path: /2/media/program_keyword/migrate_status.json
-        # method: GET
-        # params: status ( ‘queued’, ‘downloading’, ‘completed’, ‘skipped’, ‘error’ ), start, limit, ids.
-
-        $path = "/2/media/$program_keyword/migrate_status.json";
+    /**
+     * Makes the uploaded media file publicly available.
+     *
+     * @since 1.0.0
+     *
+     * @param string $program_keyword
+     * @param string $status
+     * @param int $start
+     * @param int $limit
+     * @param array $id
+     *
+     * @return array The API response.
+     */
+    public function migrateStatus($program_keyword, $status = '', $start = 0, $limit = 100, $ids = null) {
+        $path = '/2/media/' . $program_keyword . '/migrate_status.json';
 
         $body = array(
-            "status" => $status,
-            "start" => $start,
-            "limit" => $limit,
-            "ids" => $ids,
+            'status' => $status,
+            'start' => $start,
+            'limit' => $limit,
+            'ids' => $ids,
         );
 
-        return \Blubrry\REST\API::request( $path, 'POST', $body );
+        return \Blubrry\REST\API::request($path, 'POST', $body);
     }
 
-    public function upload_media( $program_keyword, $media_file ) {
-        # path: /2/media/program_keyword/mediafile.ext?format=json
-        # method: PUT
-        # params: program_keyword, mediafile.ext
+    /**
+     * Uploads a media file to the server.
+     *
+     * @since 1.0.0
+     *
+     * @param string $program_keyword
+     * @param string $media_file
+     *
+     * @return array The API response.
+     */
+    public function uploadMedia($program_keyword, $media_file) {
+        $path = '/2/media/' . $program_keyword . '/' . $media_file . '?format=json';
 
-        $path = "/2/media/$program_keyword/$media_file?format=json";
-
-        return \Blubrry\REST\API::request( $path, 'PUT' );
+        return \Blubrry\REST\API::request($path, 'PUT');
     }
 }
