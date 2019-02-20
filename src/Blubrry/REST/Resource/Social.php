@@ -178,6 +178,44 @@ class Social {
             }
         }
 
+        $type=$body['social-type'];
+        $twitter=array('content');
+
+        $facebook=array(
+            "title-$body['social-id']", 
+            "description-$body['social-id']", 
+            "destination-$body['social-id']", 
+        );
+
+        $youtube=array(
+            "title-$body['social-id']", 
+            "description-$body['social-id']", 
+        );
+
+        if ($type == "twitter") {
+            foreach($twitter as $item) {
+                if (is_null($body['social-data'][$item])) {
+                    return false;
+                }
+            }
+        }
+
+        if ($type == "facebook") {
+            foreach($facebook as $item) {
+                if (is_null($body['social-data'][$item])) {
+                    return false;
+                }
+            }
+        }
+
+        if ($type == "youtube") {
+            foreach($youtube as $item) {
+                if (is_null($body['social-data'][$item])) {
+                    return false;
+                }
+            }
+        }
+
         return \Blubrry\REST\API::request($path, 'POST', $body);
     }
 }
