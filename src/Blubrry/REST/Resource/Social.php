@@ -90,7 +90,6 @@ class Social {
                 'required' => array(),
                 'optional' => array('label', 'checked', 'name', 'value'),
             ),
-
         );
 
         foreach ($social_types as $type) {
