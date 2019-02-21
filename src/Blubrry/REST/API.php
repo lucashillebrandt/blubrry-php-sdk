@@ -55,6 +55,7 @@ class API {
      * @param string $uri
      * @param string $method
      * @param string $body
+     * @param string $headers
      *
      * @return array The API response.
      */
