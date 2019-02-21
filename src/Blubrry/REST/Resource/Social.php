@@ -68,11 +68,12 @@ class Social {
     public function getSocial($program_keyword, $params) {
         $path = '/2/social/' . $program_keyword . '/get-social-options.json';
 
-        $social_options = [];
-        $social_options['social-options'] = [];
+        $socialOptions                   = [];
+        $socialOptions['social-options'] = [];
 
-        $social_types = ['twitter', 'youtube', 'facebook'];
-        $required_fields = ['social-id', 'social-image', 'social-title'];
+        $socialTypes    = ['twitter', 'youtube', 'facebook'];
+        $requiredFields = ['social-id', 'social-image', 'social-title'];
+
         $attributes = [
             'html' => [
                 'required' => [],
@@ -92,20 +93,20 @@ class Social {
             ],
         ];
 
-        foreach ($social_types as $type) {
+        foreach ($socialTypes as $type) {
             foreach ($params[$type] as $item) {
-                $SocialOption = [];
+                $currentOption = [];
 
-                foreach ($required_fields as $field) {
+                foreach ($requiredFields as $field) {
                     if (!empty($item[$field])) {
-                        $socialOption[$field] = $item[$field];
+                        $currentOption[$field] = $item[$field];
                     } else {
                         return false;
                     }
                 }
                 
-                $SocialOption['social-type'] = $type;
-                $SocialOption['form-data'] = [];
+                $currentOption['social-type'] = $type;
+                $currentOption['form-data']   = [];
 
                 if (is_array($item['form-data'])) {
                     if (empty($item['form-data']['field-type'])) {
@@ -116,7 +117,7 @@ class Social {
                         return false;
                     }
 
-                    $type = $item['form-data']['field-type'];
+                    $type  = $item['form-data']['field-type'];
                     $order = $item['form-data']['field-order'];
 
                     foreach ($attributes as $attr) {
@@ -125,25 +126,23 @@ class Social {
                                 if (empty($item['form-data'][$req])) {
                                     return false;
                                 } else {
-                                    $SocialOption['form-data'][$req] = $item['form-data'][$req];
+                                    $currentOption['form-data'][$req] = $item['form-data'][$req];
                                 }
                             }
 
                             foreach ($attr['optional'] as $opt) {
-                                if (empty($item['form-data'][$opt])) {
-                                    continue;
-                                } else {
-                                    $SocialOption['form-data'][$opt] = $item['form-data'][$opt];
+                                if (!empty($item['form-data'][$opt])) {
+                                    $currentOption['form-data'][$opt] = $item['form-data'][$opt];
                                 }
                             }
                         }
                     }
 
-                    $SocialOption['form-data']['field-type'] = $type;
-                    $SocialOption['form-data']['field-order'] = $order;
+                    $currentOption['form-data']['field-type']  = $type;
+                    $currentOption['form-data']['field-order'] = $order;
                 }
 
-                $social_options['social-options'][] = $SocialOption;
+                $socialOptions['social-options'][] = $currentOption;
             }
         }
 
@@ -177,39 +176,29 @@ class Social {
             }
         }
 
-        $type = $body['social-type'];
-        $twitter = ['content'];
-
-        $facebook = [
-            "title-$body['social-id']",
-            "description-$body['social-id']",
-            "destination-$body['social-id']",
-        ];
-
-        $youtube = [
-            "title-$body['social-id']",
-            "description-$body['social-id']",
-        ];
-
-        $array = [];
+        $type   = $body['social-type'];
+        $social = [];
 
         if ('twitter' == $type) {
-            $array = $twitter;
+            $social = ['content'];
+        } else if ('facebook' == $type) {
+            $social = [
+                "title-$body['social-id']",
+                "description-$body['social-id']",
+                "destination-$body['social-id']",
+            ];
+        } else if ('youtube' == $type) {
+            $social = [
+                "title-$body['social-id']",
+                "description-$body['social-id']",
+            ];
+        } else {
+            return false;
         }
 
-        if ('facebook' == $type) {
-            $array = $facebook;
-        }
-
-        if ('youtube' == $type) {
-            $array = $youtube;
-        }
-
-        if (!empty($array)) {
-            foreach ($array as $item) {
-                if (is_null($body['social-data'][$item])) {
-                    return false;
-                }
+        foreach ($social as $item) {
+            if (is_null($body['social-data'][$item])) {
+                return false;
             }
         }
 
