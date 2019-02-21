@@ -21,14 +21,14 @@ class Social {
         $path = '/2/social/' . $program_keyword . '/update-listing.json';
         $body = [];
 
-        $required = array(
+        $required = [
             'title',
             'date',
             'media-url',
             'filesize',
-        );
+        ];
 
-        $optional = array(
+        $optional = [
             'feed-url',
             'guid',
             'subtitle',
@@ -36,19 +36,19 @@ class Social {
             'explicit',
             'link',
             'image',
-        );
+        ];
 
         foreach ($required as $item) {
             if (empty($params[$item])) {
                 return false;
             } else {
-                $body[$item]=$params[$item];
+                $body[$item] = $params[$item];
             }
         }
 
         foreach ($optional as $item) {
             if (!empty($params[$item])) {
-                $body[$item]=$params[$item];
+                $body[$item] = $params[$item];
             }
         }
         
@@ -68,33 +68,33 @@ class Social {
     public function getSocial($program_keyword, $params) {
         $path = '/2/social/' . $program_keyword . '/get-social-options.json';
 
-        $social_options = array();
-        $social_options['social-options'] = array();
+        $social_options = [];
+        $social_options['social-options'] = [];
 
-        $social_types=array('twitter', 'youtube', 'facebook');
-        $required_fields=array('social-id', 'social-image', 'social-title');
-        $attributes=array(
-            'html' => array(
-                'required' => array(),
-                'optional' => array('content'),
-            ),
-            'Input-text' => array(
-                'required' => array('label', 'name'),
-                'optional' => array('placeholder', 'help-text', 'rows', 'maxlength', 'value'),
-            ),
-            'input-checkbox' => array(
-                'required' => array(),
-                'optional' => array('label', 'checked', 'name', 'value'),
-            ),
-            'input-radio' => array(
-                'required' => array(),
-                'optional' => array('label', 'checked', 'name', 'value'),
-            ),
-        );
+        $social_types = ['twitter', 'youtube', 'facebook'];
+        $required_fields = ['social-id', 'social-image', 'social-title'];
+        $attributes = [
+            'html' => [
+                'required' => [],
+                'optional' => ['content'],
+            ],
+            'input-text' => [
+                'required' => ['label', 'name'],
+                'optional' => ['placeholder', 'help-text', 'rows', 'maxlength', 'value'],
+            ],
+            'input-checkbox' => [
+                'required' => [],
+                'optional' => ['label', 'checked', 'name', 'value'],
+            ],
+            'input-radio' => [
+                'required' => [],
+                'optional' => ['label', 'checked', 'name', 'value'],
+            ],
+        ];
 
         foreach ($social_types as $type) {
             foreach ($params[$type] as $item) {
-                $SocialOption = array();
+                $SocialOption = [];
 
                 foreach ($required_fields as $field) {
                     if (!empty($item[$field])) {
@@ -105,7 +105,7 @@ class Social {
                 }
                 
                 $SocialOption['social-type'] = $type;
-                $SocialOption['form-data'] = array();
+                $SocialOption['form-data'] = [];
 
                 if (is_array($item['form-data'])) {
                     if (empty($item['form-data']['field-type'])) {
@@ -143,7 +143,7 @@ class Social {
                     $SocialOption['form-data']['field-order'] = $order;
                 }
 
-                $social_options['social-options'][]= $SocialOption;
+                $social_options['social-options'][] = $SocialOption;
             }
         }
 
@@ -161,15 +161,15 @@ class Social {
      * @return array The API response.
      */
     public function postSocial($program_keyword, $body) {
-        $path='/2/social/' . $program_keyword . '/post.json';
+        $path = '/2/social/' . $program_keyword . '/post.json';
     
-        $required=array(
+        $required = [
             'podcast-id',
             'post-data',
             'social-id',
             'social-type',
             'social-data',
-        );
+        ];
     
         foreach ($required as $item) {
             if (empty($body[$item])) {
@@ -177,38 +177,36 @@ class Social {
             }
         }
 
-        $type=$body['social-type'];
-        $twitter=array('content');
+        $type = $body['social-type'];
+        $twitter = ['content'];
 
-        $facebook=array(
+        $facebook = [
             "title-$body['social-id']",
             "description-$body['social-id']",
             "destination-$body['social-id']",
-        );
+        ];
 
-        $youtube=array(
+        $youtube = [
             "title-$body['social-id']",
             "description-$body['social-id']",
-        );
+        ];
 
-        if ($type == "twitter") {
-            foreach ($twitter as $item) {
-                if (is_null($body['social-data'][$item])) {
-                    return false;
-                }
-            }
+        $array = [];
+
+        if ('twitter' == $type) {
+            $array = $twitter;
         }
 
-        if ($type == "facebook") {
-            foreach ($facebook as $item) {
-                if (is_null($body['social-data'][$item])) {
-                    return false;
-                }
-            }
+        if ('facebook' == $type) {
+            $array = $facebook;
         }
 
-        if ($type == "youtube") {
-            foreach ($youtube as $item) {
+        if ('youtube' == $type) {
+            $array = $youtube;
+        }
+
+        if (!empty($array)) {
+            foreach ($array as $item) {
                 if (is_null($body['social-data'][$item])) {
                     return false;
                 }
