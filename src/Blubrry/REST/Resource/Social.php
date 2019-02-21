@@ -68,8 +68,9 @@ class Social {
     public function getSocial($program_keyword, $params) {
         $path = '/2/social/' . $program_keyword . '/get-social-options.json';
 
-        $socialOptions                   = [];
-        $socialOptions['social-options'] = [];
+        $socialOptions = [
+           'social-options' => [], 
+        ];
 
         $socialTypes    = ['twitter', 'youtube', 'facebook'];
         $requiredFields = ['social-id', 'social-image', 'social-title'];
