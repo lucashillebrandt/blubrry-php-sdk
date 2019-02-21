@@ -12,13 +12,13 @@ class Social {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
+     * @param string $programKeyword
      * @param array $params
      *
      * @return array The API response.
      */
-    public function updateListing($program_keyword, $params) {
-        $path = '/2/social/' . $program_keyword . '/update-listing.json';
+    public function updateListing($programKeyword, $params) {
+        $path = '/2/social/' . $programKeyword . '/update-listing.json';
         $body = [];
 
         $required = [
@@ -60,13 +60,13 @@ class Social {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
+     * @param string $programKeyword
      * @param array $params
      *
      * @return array The API response.
      */
-    public function getSocial($program_keyword, $params) {
-        $path = '/2/social/' . $program_keyword . '/get-social-options.json';
+    public function getSocial($programKeyword, $params) {
+        $path = '/2/social/' . $programKeyword . '/get-social-options.json';
 
         $socialOptions = [
            'social-options' => [], 
@@ -155,13 +155,13 @@ class Social {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
+     * @param string $programKeyword
      * @param array $body
      *
      * @return array The API response.
      */
-    public function postSocial($program_keyword, $body) {
-        $path = '/2/social/' . $program_keyword . '/post.json';
+    public function postSocial($programKeyword, $body) {
+        $path = '/2/social/' . $programKeyword . '/post.json';
     
         $required = [
             'podcast-id',
