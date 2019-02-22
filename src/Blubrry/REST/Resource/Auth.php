@@ -8,12 +8,12 @@ namespace Blubrry\REST\Resource;
  */
 class Auth {
     /**
-     * Update the listing.
+     * Gets Refresh Token.
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
-     * @param array $body
+     * @param string $code
+     * @param string $redirect_uri
      *
      * @return array The API response.
      */
@@ -27,7 +27,7 @@ class Auth {
         }
 
         $path = '/oauth2/token?grant_type=authorization_code';
-        $path += '&code' . $code;
+        $path += '&code=' . $code;
         $path += '&redirect_uri=' . $redirect_uri;
 
         return \Blubrry\REST\API::request($path, 'GET');
