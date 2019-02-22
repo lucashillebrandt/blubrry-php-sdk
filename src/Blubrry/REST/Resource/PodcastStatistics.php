@@ -12,26 +12,26 @@ class PodcastStatistics {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
+     * @param string $programKeyword
      * @param string $month
      * @param string $year
      *
      * @return array The API response.
      */
-    public function summary($program_keyword, $month = null, $year = null) {
-        $path='/2/stats/' . $program_keyword . '/summary.json';
-        $qs='';
+    public function summary($programKeyword, $month = null, $year = null) {
+        $path = '/2/stats/' . $programKeyword . '/summary.json';
+        $qs = '';
 
         if (! is_null($month)) {
-            $qs+='?month=' . $month;
+            $qs += '?month=' . $month;
         }
 
         if (! is_null($year)) {
-            $qs+='?year=' . $year;
+            $qs += '?year=' . $year;
         }
 
         if (! is_null($year) && ! is_null($month)) {
-            $qs='?month=' . $month . '&year=' . $year;
+            $qs = '?month=' . $month . '&year=' . $year;
         }
 
         return \Blubrry\REST\API::request($path . $qs, 'GET');
@@ -42,21 +42,21 @@ class PodcastStatistics {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
+     * @param string $programKeyword
      * @param array $params
      *
      * @return array The API response.
      */
-    public function totals($program_keyword, $params) {
-        $path = '/2/stats/' . $program_keyword . '/totals.json';
-        $qs='?';
+    public function totals($programKeyword, $params) {
+        $path = '/2/stats/' . $programKeyword . '/totals.json';
+        $qs   = '?';
 
         if (empty($params)) {
             return false;
         }
     
         foreach ($params as $key => $item) {
-            $qs+=$key . '=' . $item . '&';
+            $qs += $key . '=' . $item . '&';
         }
 
         return \Blubrry\REST\API::request($path . $qs, 'GET');
