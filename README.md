@@ -24,7 +24,7 @@ Where:
 
 Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
-client_id    |  The client_id that the customer recieved from Blubrry Support Team. | string | no
+client_id |  The client_id that the customer recieved from Blubrry Support Team. | string | no
 redirect_uri |  The url that the user should be redirected after login into the Blubrry account. | string | no
 
 This will return a link like this:
@@ -40,8 +40,8 @@ Description: List Programs from Blubrry.
 
 Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
-code       |  Response code from User login at Blubrry | string | no
-redirect_uri |  The url that the user should be redirected after login into the Blubrry account | integer | yes
+code | Response code from User login at Blubrry | string | no
+redirect_uri | The url that the user should be redirected after login into the Blubrry account | integer | yes
 
 Example request:
 
@@ -78,8 +78,8 @@ Description: List Programs from Blubrry.
 
 Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
-start       |  Specifies the number of results to return. The default is 20, 100 maximum | integer | yes
-limit       |  Specifies the start position of returned results | integer | yes
+start |  Specifies the number of results to return. The default is 20, 100 maximum | integer | yes
+limit |  Specifies the start position of returned results | integer | yes
 
 Example request:
 
@@ -107,8 +107,8 @@ Description: List umpublished Media from Blubrry.
 Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
 programKeyword | Specifies the program | string | no
-start       |  Specifies the number of results to return. The default is 20, 100 maximum | integer | yes
-limit       |  Specifies the start position of returned results | integer | yes
+start |  Specifies the number of results to return. The default is 20, 100 maximum | integer | yes
+limit |  Specifies the start position of returned results | integer | yes
 
 Example request:
 
@@ -137,8 +137,8 @@ Description: Publish Media into Blubrry.
 Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
 programKeyword | Specifies the program | string | no
-mediafile       |  Specifies the media file to insert | string | no
-publish       |  When true, the media file will be made publicly available. | boolean | no
+mediafile |  Specifies the media file to insert | string | no
+publish |  When true, the media file will be made publicly available. | boolean | no
 
 Example request:
 
@@ -167,7 +167,7 @@ Description: Delete media from Blubrry
 Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
 programKeyword | Specifies the program | string | no
-mediafile       |     Specifies the media file to delete | string | no
+mediafile | Specifies the media file to delete | string | no
 
 Example request:
 
@@ -195,8 +195,8 @@ Description: Adds media URLs to the migration queue.
 Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
 programKeyword | Specifies the program | string | no
-url       | Individual URL to add to migration queue. | string | no
-urls      | Multiple URLs separated by new lines to add to migration queue. | Array | yes
+url | Individual URL to add to migration queue. | string | no
+urls | Multiple URLs separated by new lines to add to migration queue. | Array | yes
 
 Example request:
 
@@ -225,9 +225,9 @@ Description: Remove media URLs from the migration queue.
 Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
 programKeyword | Specifies the program | string | no
-url       | Individual URL to add to migration queue. | string | no
-urls      | Multiple URLs separated by new lines to add to migration queue. Send `null` or `[]` if you are using `url`) | Array | yes
-ids      | One or more unique migrate IDs separated by commas. | Array | no
+url | Individual URL to add to migration queue. | string | no
+urls | Multiple URLs separated by new lines to add to migration queue. Send `null` or `[]` if you are using `url`) | Array | yes
+ids | One or more unique migrate IDs separated by commas. | Array | no
 
 Example request:
 
@@ -258,9 +258,9 @@ Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
 programKeyword | Specifies the program | string | no
 status | Only returns results with specific status. Status may be any one of `queued`, `downloading`, `completed`, `skipped`, `error` or empty string for no specific status | string | no
-start       |  Specifies the number of results to return. The default is 20, 100 maximum | integer | no
-limit       |  Specifies the start position of returned results | integer | no
-ids      | One or more unique migrate IDs separated by commas. | Array | no
+start | Specifies the number of results to return. The default is 20, 100 maximum | integer | no
+limit | Specifies the start position of returned results | integer | no
+ids | One or more unique migrate IDs separated by commas. | Array | no
 
 Example request:
 
@@ -443,9 +443,16 @@ Example response:
 ``` json
 {}
 ```
+
+### - getSocial
+
+- TBI 
+
+### - postSocial
+
+- TBI
+
 ### Installation
-
-
 
 Blubrry SDK requires [PHP](https://www.php.net/) v7.2+ to run.
 
