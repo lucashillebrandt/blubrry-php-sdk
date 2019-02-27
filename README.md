@@ -60,7 +60,7 @@ $api->auth()->getRefresh($code, $redirect_uri);
 Example response: 
 
 ``` json
-{“access_token”:”3b636a92ee50a8f17543f6a531b27e55d525bcd1″, “expires_in”:3600, “token_type”:”bearer”, “scope”:null, “refresh_token”:”55b01e60a74e45b3c66032627dcbc0dddd0bbd6a”}
+{"access_token":"3b636a92ee50a8f17543f6a531b27e55d525bcd1", "expires_in":3600, "token_type":"bearer", "scope":null, "refresh_token":"55b01e60a74e45b3c66032627dcbc0dddd0bbd6a"}
 ```
 
 And then, you will use the `access_token` to be able to do requests to the another API endpoits.
