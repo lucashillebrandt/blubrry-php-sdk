@@ -1,5 +1,9 @@
 # Blubrry PHP SDK
 
+[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
+
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+
 The SDK is based on Blubrry API version 2 and you can find the documentation [here](https://create.blubrry.com/resources/blubrry-api/)
 
 # Supported Features
@@ -313,6 +317,82 @@ Example response:
 ``` json
 {}
 ```
+---
+### - summary
+Description: Gets Podcast Summary.
+
+Parameters  | Description | Type | Optional
+----------  | ----------- | -    |--------
+program_keyword | Specifies the program | string | no
+month | Specific month to pull summary from. | string | yes
+year | Specific year to pull summary from | string | yes
+
+Example request:
+
+``` php
+<?php
+require_once 'Blubrry/autoload.php';
+
+$api = new \Blubrry\REST\API();
+
+$program_keyword = 'my_program';
+$media_file = '';
+
+$api->podcastStatistics()->summary($program_keyword, $month, $year);
+```
+
+Example response:
+
+``` json
+{}
+```
+
+---
+### - totals
+Description: Get totals from a specific podcast, only available to professional statistics accounts.
+Note: `start-date` and `end-date` range cannot exceed 45 days.
+
+Parameters  | Description | Type | Optional
+----------  | ----------- | -    |--------
+program_keyword | Specifies the program | string | no
+start-date | A start date for fetching Statistics data. Requests can specify a start date formatted as YYYY-MM-DD.  | string | no
+end-date | End date for fetching Statistics data. The request can specify an end date formatted as YYYY-MM-DD. | string | yes
+fields | Defaults to date, episode, downloads Selector specifying a subset of fields to include in the response. Fields include date (YYYY-MM-DD), episode (media file name), downloads. | string | yes
+start |  Specifies the number of results to return. The default is 20, 100 maximum | integer | yes
+limit |  Specifies the start position of returned results | integer | yes
+
+
+Example request:
+
+``` php
+<?php
+require_once 'Blubrry/autoload.php';
+
+$api = new \Blubrry\REST\API();
+
+$program_keyword = 'my_program';
+$start_date = '';
+$end_date = '';
+$fields = '';
+$start = '';
+$limit = ;
+
+$params = [
+    'start-date' => $start_date,
+    'end-date'   => $end_date,
+    'fields'     => $fields,
+    'start'      => $start,
+    'limit'      => $limit,
+];
+
+$api->podcastStatistics()->totals($program_keyword, $params);
+```
+
+Example response:
+
+``` json
+{}
+```
 ### Installation
 
 
@@ -322,3 +402,4 @@ Blubrry SDK requires [PHP](https://www.php.net/) v7.2+ to run.
 Clone the repository and make sure you import the file `Blubrry/autoload.php`
 
 This SDK is open source with a [public repository](github.com/lucashillebrandt/blubrry-php-sdk) on GitHub.
+
