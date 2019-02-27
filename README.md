@@ -57,7 +57,7 @@ $redirect_uri = 'https://$redirect_uri/';
 $api->auth()->getRefresh($code, $redirect_uri);
 ```
 
-Example response: 
+Example response:
 
 ``` json
 {"access_token":"3b636a92ee50a8f17543f6a531b27e55d525bcd1", "expires_in":3600, "token_type":"bearer", "scope":null, "refresh_token":"55b01e60a74e45b3c66032627dcbc0dddd0bbd6a"}
@@ -95,7 +95,7 @@ $limit = 100;
 $api->mediaHosting()->listPrograms($limit, $start);
 ```
 
-Example response: 
+Example response:
 
 ``` json
 {}
@@ -348,14 +348,15 @@ Example response:
 Description: Get totals from a specific podcast, only available to professional statistics accounts.
 Note: `start-date` and `end-date` range cannot exceed 45 days.
 
-Parameters  | Description | Type | Optional
-----------  | ----------- | -    |--------
-programKeyword | Specifies the program | string | no
-start-date | A start date for fetching Statistics data. Requests can specify a start date formatted as YYYY-MM-DD.  | string | no
-end-date | End date for fetching Statistics data. The request can specify an end date formatted as YYYY-MM-DD. | string | yes
-fields | Defaults to date, episode, downloads Selector specifying a subset of fields to include in the response. Fields include date (YYYY-MM-DD), episode (media file name), downloads. | string | yes
-start |  Specifies the number of results to return. The default is 20, 100 maximum | integer | yes
-limit |  Specifies the start position of returned results | integer | yes
+Parameters | Sub-Parameters | Description | Type | Optional
+---------- | -------------- | ----------- | ---- | --------
+programKeyword | - | Specifies the program | string | no
+params | - | Array with the following parameters | Array | no
+- | start-date | A start date for fetching Statistics data. Requests can specify a start date formatted as YYYY-MM-DD.  | string | no
+- | end-date | End date for fetching Statistics data. The request can specify an end date formatted as YYYY-MM-DD. | string | yes
+- | fields | Defaults to date, episode, downloads Selector specifying a subset of fields to include in the response. Fields include date (YYYY-MM-DD), episode (media file - | name), downloads. | string | yes
+- | start |  Specifies the number of results to return. The default is 20, 100 maximum | integer | yes
+- | limit |  Specifies the start position of returned results | integer | yes
 
 
 Example request:
@@ -419,7 +420,6 @@ require_once 'Blubrry/autoload.php';
 $api = new \Blubrry\REST\API();
 
 $programKeyword = 'my_program';
-$media_file = '';
 
 $params = [
     'feed-url'  => $feedUrl,
