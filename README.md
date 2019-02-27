@@ -354,7 +354,7 @@ programKeyword | - | Specifies the program | string | no
 params | - | Array with the following parameters | Array | no
 - | start-date | A start date for fetching Statistics data. Requests can specify a start date formatted as YYYY-MM-DD.  | string | no
 - | end-date | End date for fetching Statistics data. The request can specify an end date formatted as YYYY-MM-DD. | string | yes
-- | fields | Defaults to date, episode, downloads Selector specifying a subset of fields to include in the response. Fields include date (YYYY-MM-DD), episode (media file - | name), downloads. | string | yes
+- | fields | Defaults to date, episode, downloads Selector specifying a subset of fields to include in the response. Fields include date (YYYY-MM-DD), episode (media file name), downloads. | string | yes
 - | start |  Specifies the number of results to return. The default is 20, 100 maximum | integer | yes
 - | limit |  Specifies the start position of returned results | integer | yes
 
