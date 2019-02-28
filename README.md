@@ -496,11 +496,110 @@ Example response:
 ``` json
 {}
 ```
-
+---
 ### - getSocial
 
-- TBI
+Description: Get Social Options.
 
+Parameters  | Sub-Parameters |  Description | Type | Optional
+----------  | -------------- |----------- | -    |--------
+programKeyword | - |Specifies the program | string | no
+params | - | Array with the following parameters | Array | no
+-| **social-type** | Array with all of the another parameters | array | no
+-| podcast-id | ID of podcast to post to social. | string | no
+-| post-data | Destinations to post to with specified parameters | string | no
+-| social-id | Destination social ID which is the meta_id value of the social network settings in the programs_meta database table.| string | no
+-| social-image | URL to an image to represent the social network in a web page form. | string | no
+-| social-title | Title of social destination | string | yes
+-| **form-data** | This is an array of items of key/value pairs. The options are for generating the form and mapping the values to fields for the eventual post to social endpoints. | Array | yes
+-| row-type | Specifies type of row to enter into form. Currently supported types: input-text, input-checkbox | string | yes
+-| row-order | Order number for the row to appear in form. Number starts with 1 and increments upward. | string | yes
+-| **row-attributes** | Row attributes if row type is `HTML` | array | yes
+-| content | Raw HTML text to be displayed in on page. | string | yes
+-| **row-attributes** | Social data array if social-type is `input-text` | Array | yes
+-| label | Title of input, placed above input wrapped within a label tag. | string | yes
+-| placeholder | Placeholder within input. | string | yes
+-| help-text | Text to go below input box. | string | yes
+-| rows | Number of rows for input box. Default if not specified is 1. If 2 or more, the textarea tag is used instead of input. | string | yes
+-| maxlength | Maximum character length for the input box. | string | yes
+-| name | Name of input field | string | yes
+-| value | Value for input field | string | yes
+-| **row-attributes** | Social data array if social-type is `input-checkbox` | Array | yes
+-| label | Title of input, placed to the right of checkbox within a label tag. | string | yes
+-| checked | Value of either blank (not checked) or 'checked' to indicate that the input should be checked upon initial loading. | string | yes
+-| name | Name of input field (only used once). | string | yes
+-| value  | Value of input field| string | yes
+-| **row-attributes** | Social data array if social-type is `input-radio` | Array | yes
+-| label | Title of input, placed to the right of checkbox within a label tag. | string | yes
+-| checked | Value of either blank (not checked) or 'checked' to indicate that the input should be checked upon initial loading. | string | yes
+-| name | Name of input field (may be used multiple times to indicate a series of checkboxes) | string | yes
+-| value  | Value of input field | string | yes
+
+Example request:
+
+``` php
+<?php
+require_once 'Blubrry/autoload.php';
+
+$api = new \Blubrry\REST\API($accessToken);
+
+$programKeyword = 'my_program';
+
+$params = [
+    'twitter' => [
+        'podcast-id'   => $podcastId,
+        'post-data'    => $postData,
+        'social-id'    => $socialId,
+        'social-type'  => 'twitter',
+        'social-title' => $socialTitle,
+        'form-data'    => [
+            'row-type'  => 'HTML',
+            'row-order' => 1,
+            'row-arrtibutes' => [
+                'content' => '<p>hi</p>',
+            ],
+        ],
+    ],
+    'youtube' => [
+        'podcast-id'   => $podcastId,
+        'post-data'    => $postData,
+        'social-id'    => $socialId,
+        'social-type'  => 'youtube',
+        'social-title' => $socialTitle,
+        'form-data'    => [
+            'row-type'  => 'HTML',
+            'row-order' => 1,
+            'row-arrtibutes' => [
+                'content' => '<p>hello</p>',
+            ],
+        ],
+    ],
+    'facebook' => [
+        'podcast-id'   => $podcastId,
+        'post-data'    => $postData,
+        'social-id'    => $socialId,
+        'social-type'  => 'facebook',
+        'social-title' => $socialTitle,
+        'form-data'    => [
+            'row-type'  => 'HTML',
+            'row-order' => 1,
+            'row-arrtibutes' => [
+                'content' => '<p>hello</p>',
+            ],
+        ],
+    ],
+];
+
+$api->social()->getSocial($programKeyword, $params);
+```
+
+Example response:
+
+``` json
+{}
+```
+
+---
 ### - postSocial
 
 Description: Post to Social.
