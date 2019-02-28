@@ -40,8 +40,10 @@ Description: List Programs from Blubrry.
 
 Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
+clientId | Client Id recieved from Blubrry Team | string | no
+clientSecret |  Client Secret recieved from Blubrry | string | no
 code | Response code from User login at Blubrry | string | no
-redirect_uri | The url that the user should be redirected after login into the Blubrry account | integer | yes
+redirectUri | The url that the user should be redirected after login into the Blubrry account | integer | yes
 
 Example request:
 
@@ -52,9 +54,11 @@ require_once 'Blubrry/autoload.php';
 $api = new \Blubrry\REST\API();
 
 $code = '767a88a9576asdasdasda123123cfd';
-$redirect_uri = 'https://$redirect_uri/';
+$redirectUri = 'https://$redirect_uri/';
+$clientId = '123456789';
+$clientSecret = '12d3sa4d56as74d65asd32as1d';
 
-$api->auth()->getRefresh($code, $redirect_uri);
+$api->auth($clientId, $clientSecret)->getRefresh($code, $redirectUri);
 ```
 
 Example response:
@@ -67,9 +71,36 @@ And then, you will use the `access_token` to be able to do requests to the anoth
 
 The `access_token` expires in one hour, you will need to save the `refresh_token` locally and send a request to the endpoint `refreshToken` to retrieve a new `access_token` without need of the user loggin into the Blubrry account.
 
-### - refreshToken
+### - getNewAccessToken
 
-- TBI
+Description: Updates the Access token using the Refresh Token.
+
+Parameters  | Description | Type | Optional
+----------  | ----------- | -    |--------
+clientId | Client Id recieved from Blubrry Team | string | no
+clientSecret |  Client Secret recieved from Blubrry | string | no
+refreshToken | Response field from getRefresh function | string | no
+
+Example request:
+
+``` php
+<?php
+require_once 'Blubrry/autoload.php';
+
+$api = new \Blubrry\REST\API();
+
+$clientId = '123456789';
+$clientSecret = '12d3sa4d56as74d65asd32as1d';
+$refreshToken = '55b01e60a74e45b3c66032627dcbc0dddd0bbd6a';
+
+$api->auth($clientId, $clientSecret)->getNewAccessToken($refreshToken);
+```
+
+Example response:
+
+``` json
+{"access_token":"3b636a92ee50a8f17543f6a531b27e55d525bcd1", "expires_in":3600, "token_type":"bearer", "scope":null}
+```
 
 # Endpoints
 
@@ -87,7 +118,7 @@ Example request:
 <?php
 require_once 'Blubrry/autoload.php';
 
-$api = new \Blubrry\REST\API();
+$api = new \Blubrry\REST\API($accessToken);
 
 $start = 0;
 $limit = 100;
@@ -116,7 +147,7 @@ Example request:
 <?php
 require_once 'Blubrry/autoload.php';
 
-$api = new \Blubrry\REST\API();
+$api = new \Blubrry\REST\API($accessToken);
 
 $start = 0;
 $limit = 100;
@@ -146,7 +177,7 @@ Example request:
 <?php
 require_once 'Blubrry/autoload.php';
 
-$api = new \Blubrry\REST\API();
+$api = new \Blubrry\REST\API($accessToken);
 
 $programKeyword = "my_program";
 $mediafile = "";
@@ -175,7 +206,7 @@ Example request:
 <?php
 require_once 'Blubrry/autoload.php';
 
-$api = new \Blubrry\REST\API();
+$api = new \Blubrry\REST\API($accessToken);
 
 $programKeyword = "my_program";
 $mediafile = "";
@@ -204,7 +235,7 @@ Example request:
 <?php
 require_once 'Blubrry/autoload.php';
 
-$api = new \Blubrry\REST\API();
+$api = new \Blubrry\REST\API($accessToken);
 
 $programKeyword = 'my_program';
 $url = '';
@@ -235,7 +266,7 @@ Example request:
 <?php
 require_once 'Blubrry/autoload.php';
 
-$api = new \Blubrry\REST\API();
+$api = new \Blubrry\REST\API($accessToken);
 
 $programKeyword = 'my_program';
 $url = '';
@@ -268,7 +299,7 @@ Example request:
 <?php
 require_once 'Blubrry/autoload.php';
 
-$api = new \Blubrry\REST\API();
+$api = new \Blubrry\REST\API($accessToken);
 
 $programKeyword = 'my_program';
 $status = 'queued';
@@ -300,7 +331,7 @@ Example request:
 <?php
 require_once 'Blubrry/autoload.php';
 
-$api = new \Blubrry\REST\API();
+$api = new \Blubrry\REST\API($accessToken);
 
 $programKeyword = 'my_program';
 $media_file = '';
@@ -329,7 +360,7 @@ Example request:
 <?php
 require_once 'Blubrry/autoload.php';
 
-$api = new \Blubrry\REST\API();
+$api = new \Blubrry\REST\API($accessToken);
 
 $programKeyword = 'my_program';
 $media_file = '';
@@ -365,7 +396,7 @@ Example request:
 <?php
 require_once 'Blubrry/autoload.php';
 
-$api = new \Blubrry\REST\API();
+$api = new \Blubrry\REST\API($accessToken);
 
 $programKeyword = 'my_program';
 $start_date = '';
@@ -417,7 +448,7 @@ Example request:
 <?php
 require_once 'Blubrry/autoload.php';
 
-$api = new \Blubrry\REST\API();
+$api = new \Blubrry\REST\API($accessToken);
 
 $programKeyword = 'my_program';
 
@@ -446,7 +477,7 @@ Example response:
 
 ### - getSocial
 
-- TBI 
+- TBI
 
 ### - postSocial
 
