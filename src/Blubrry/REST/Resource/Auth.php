@@ -8,6 +8,14 @@ namespace Blubrry\REST\Resource;
  */
 class Auth {
     /**
+     * Constructor
+     */
+    public function __construct($clientId = null, $clientSecret = null) {
+        $this->clientId     = $clientId;
+        $this->clientSecret = $clientSecret;
+    } 
+
+    /**
      * Gets Refresh Token.
      *
      * @since 1.0.0
@@ -17,19 +25,47 @@ class Auth {
      *
      * @return array The API response.
      */
-    public function getRefresh($code, $redirect_uri) {
-        if (empty($code)) {
+    public function getRefresh($code, $redirectUri) {
+        if (empty($code) || is_null($redirectUri) || is_null($this->clientId) || is_null($this->clientSecret)) {
             return false;
         }
 
-        if (empty($redirect_uri)) {
+        $path = '/oauth2/token';
+
+        $body = [
+            'grant_type'    => 'authorization_code',
+            'redirect_uri'  => $redirectUri,
+            'code'          => $code,
+            'client_id'     => $this->clientId,
+            'client_secret' => $this->clientSecret,
+        ];
+
+        return \Blubrry\REST\API::request($path, 'POST', $body);
+    }
+
+    /**
+     * Gets new Access Token.
+     *
+     * @since 1.0.0
+     *
+     * @param string $refreshRoken
+     *
+     * @return array The API response.
+     */
+    public function getNewAccessToken($refreshToken) {
+        if (empty($refreshToken) || is_null($this->clientId) || is_null($this->clientSecret)) {
             return false;
         }
 
-        $path = '/oauth2/token?grant_type=authorization_code';
-        $path += '&code=' . $code;
-        $path += '&redirect_uri=' . $redirect_uri;
+        $path = '/oauth2/token';
 
-        return \Blubrry\REST\API::request($path, 'GET');
+        $body = [
+            'grant_type'    => 'refresh_token',
+            'refresh_token' => $refreshToken,
+            'client_id'     => $this->clientId,
+            'client_secret' => $this->clientSecret,
+        ];
+
+        return \Blubrry\REST\API::request($path, 'POST', $body);
     }
 }
