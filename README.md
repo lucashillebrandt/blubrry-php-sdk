@@ -36,7 +36,7 @@ https://$redirect_uri/code=767a88a9576asdasdasda123123cfd
 Then, you will have to retrieve a Refresh token for this user:
 
 ### - getRefresh
-Description: List Programs from Blubrry.
+Description: Gets Access and Refresh token from Blubrry API.
 
 Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
@@ -54,7 +54,7 @@ require_once 'Blubrry/autoload.php';
 $api = new \Blubrry\REST\API();
 
 $code = '767a88a9576asdasdasda123123cfd';
-$redirectUri = 'https://$redirect_uri/';
+$redirectUri = 'https://google.com/login';
 $clientId = '123456789';
 $clientSecret = '12d3sa4d56as74d65asd32as1d';
 
