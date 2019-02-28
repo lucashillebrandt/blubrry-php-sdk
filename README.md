@@ -129,7 +129,13 @@ $api->mediaHosting()->listPrograms($limit, $start);
 Example response:
 
 ``` json
-{}
+[
+  {
+    "program_id":"1",
+    "program_title":"Your Program Title",
+    "program_keyword":"somewordhere"
+  }
+]
 ```
 ---
 ### - listUnpublished
@@ -247,7 +253,7 @@ $api->mediaHosting()->addMigrateMediaUrl($programKeyword, $url, $urls);
 Example response:
 
 ``` json
-{}
+{"success":"URL(s) added successfully."}
 ```
 ---
 ### - removeMigrateMediaUrl
@@ -279,7 +285,7 @@ $api->mediaHosting()->removeMigrateMediaUrl($programKeyword, $url, $urls, $ids);
 Example response:
 
 ``` json
-{}
+{"success":"URL removed successfully."}
 ```
 ---
 ### - migrateStatus
@@ -288,10 +294,10 @@ Description: Makes the uploaded media file publicly available.
 Parameters  | Description | Type | Optional
 ----------  | ----------- | -    |--------
 programKeyword | Specifies the program | string | no
-status | Only returns results with specific status. Status may be any one of `queued`, `downloading`, `completed`, `skipped`, `error` or empty string for no specific status | string | no
-start | Specifies the number of results to return. The default is 20, 100 maximum | integer | no
-limit | Specifies the start position of returned results | integer | no
-ids | One or more unique migrate IDs separated by commas. | Array | no
+status | Only returns results with specific status. Status may be any one of `queued`, `downloading`, `completed`, `skipped`, `error` or empty string for no specific status | string | yes
+start | Specifies the number of results to return. The default is 20, 100 maximum | integer | yes
+limit | Specifies the start position of returned results | integer | yes
+ids | One or more unique migrate IDs separated by commas. | Array | yes
 
 Example request:
 
@@ -371,7 +377,23 @@ $api->podcastStatistics()->summary($programKeyword, $month, $year);
 Example response:
 
 ``` json
-{}
+{
+    "stats_url":"http:\/\/stats.blubrry.com",
+    "program_id":"123456",
+    "overall": {
+        "total":null,
+        "unique":null
+    },
+    "current_month": {
+        "total":null,
+        "unique":null
+    },
+    "last_month": {
+        "total":null,
+        "unique":null
+    },
+    "media":[]
+}
 ```
 
 ---
@@ -481,7 +503,55 @@ Example response:
 
 ### - postSocial
 
-- TBI
+Description: Post to Social.
+
+Parameters  | Sub-Parameters |  Description | Type | Optional
+----------  | -------------- |----------- | -    |--------
+programKeyword | - |Specifies the program | string | no
+body | - | Array with the following parameters | Array | no
+-| podcast-id | ID of podcast to post to social. | string | no
+-| post-data | Destinations to post to with specified parameters | string | no
+-| social-id | Destination social ID which is the meta_id value of the social network settings in the programs_meta database table.| string | no
+-| social-type | Type of destination, not limited to but currently supported values: twitter, facebook, youtube| string | no
+-| social-data | Array of data to be posted to the specified social network | string | no
+-| social-data | Social data array if social-type is twitter | Array | yes
+-| content–{SOCIAL-ID} | Message to post to twitter. Character limit: 140 | string | no
+-| social-data | Social data array if social-type is facebook | Array | yes
+-| title–{SOCIAL-ID} | Title of media file. Character limit: 90 | string | yes
+-| description–{SOCIAL-ID} | Posting content to Facebook wall or fan page. Character limit: 4000 | string | yes
+-| destination-{SOCIAL-ID}-{PAGE-ID} | One or more facebook destinations. | string | yes
+-| social-data | Social data array if social-type is Youtube | Array | yes
+-| title–{SOCIAL-ID} | Title of posting to YouTube. Character limit: 100 | string | yes
+-| description–{SOCIAL-ID} |  Description of posting to YouTube. Character limit: 4000 | string | yes
+
+Example request:
+
+``` php
+<?php
+require_once 'Blubrry/autoload.php';
+
+$api = new \Blubrry\REST\API($accessToken);
+
+$programKeyword = 'my_program';
+
+$body = [
+    'podcast-id'  => $podcastId,
+    'post-data'   => $postData,
+    'social-id'   => $socialId,
+    'social-type' => 'twitter',
+    'social-data' => [
+        'title-123456' => 'My awesome title for twitter',
+    ],
+];
+
+$api->social()->postSocial($programKeyword, $body);
+```
+
+Example response:
+
+``` json
+{}
+```
 
 ### Installation
 
