@@ -49,15 +49,12 @@ class PodcastStatistics {
      */
     public function totals($programKeyword, $params) {
         $path = '/2/stats/' . $programKeyword . '/totals.json';
-        $qs   = '?';
 
         if (empty($params)) {
             return false;
         }
     
-        foreach ($params as $key => $item) {
-            $qs += $key . '=' . $item . '&';
-        }
+        $qs = (!empty($params) && is_array($params)) ? http_build_query($qs) : '';
 
         return \Blubrry\REST\API::request($path . $qs, 'GET');
     }
