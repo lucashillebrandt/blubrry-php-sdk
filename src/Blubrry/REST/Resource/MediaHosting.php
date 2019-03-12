@@ -35,7 +35,7 @@ class MediaHosting {
      * @return array The API response.
      */
     public function listUnpublished($programKeyword, $limit = 100, $start = 0) {
-        $path='/2/media/' . $programKeyword . '/index.json?limit=' . $limit . '&start=' . $start;
+        $path = '/2/media/' . $programKeyword . '/index.json?limit=' . $limit . '&start=' . $start;
 
         return \Blubrry\REST\API::request($path, 'GET');
     }
@@ -85,7 +85,7 @@ class MediaHosting {
      * @return array The API response.
      */
     public function addMigrateMediaUrl($programKeyword, $url = null, $urls = null) {
-        $path='/2/media/' . $programKeyword . '/migrate_add.json';
+        $path = '/2/media/' . $programKeyword . '/migrate_add.json';
 
         if (!is_null($url)) {
             $body = [
@@ -171,8 +171,15 @@ class MediaHosting {
      * @return array The API response.
      */
     public function uploadMedia($programKeyword, $mediaFile) {
-        $path = '/2/media/' . $programKeyword . '/' . $mediaFile . '?format=json';
+        $path = '/2/media/' . urlencode($programKeyword) . '/' . urlencode($mediaFile['name']) . '?format=json';
 
-        return \Blubrry\REST\API::request($path, 'PUT');
+        $opts = [
+            CURLOPT_BINARYTRANSFER => true,
+            CURLOPT_PUT            => true,
+            CURLOPT_INFILE         => fopen($mediaFile['tmp_name'], 'rb'),
+            CURLOPT_INFILESIZE     => filesize($mediaFile['tmp_name']),
+        ];
+
+        return \Blubrry\REST\API::request($path, 'PUT', null, null, $opts);
     }
 }
