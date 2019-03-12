@@ -41,6 +41,7 @@ class HttpClient {
         $url,
         $queryString,
         $headers = null,
+        $opts = null,
         $auth = null,
         $timeout = null,
         $secure = true
@@ -51,9 +52,9 @@ class HttpClient {
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_POST, true);
 
-            if (preg_match('/(PUT|DELETE)/', $method)) {
+            /*if (preg_match('/(PUT|DELETE)/', $method)) {
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-            }
+            } */
 
             if (!empty($queryString)) {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $queryString);
@@ -80,6 +81,12 @@ class HttpClient {
         }
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        if (!is_null($opts) && is_array($opts)) {
+            foreach ($opts as $key => $value) {
+                curl_setopt($ch, $key, $value);
+            }
+        }
 
         $response = curl_exec($ch);
 
