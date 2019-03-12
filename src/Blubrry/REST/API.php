@@ -91,7 +91,7 @@ class API {
         $url = self::BLUBRRY_API_URL . $uri;
         $headers = [];
 
-        if ( 'PUT' != $method ) {
+        if ('PUT' != $method) {
             $body      = http_build_query($body);
             $headers[] = 'Content-type: application/x-www-form-urlencoded';
         }
