@@ -83,20 +83,22 @@ class API {
      * @param string $method
      * @param string $body
      * @param string $headers
+     * @param array  $options
      *
      * @return array The API response.
      */
-    public static function request($uri, $method = 'GET', $body = null, $headers = null) {
+    public static function request($uri, $method = 'GET', $body = null, $headers = null, $options = null) {
         $url = self::BLUBRRY_API_URL . $uri;
+        $headers = [];
 
-        $body = http_build_query($body);
+        if ( 'PUT' != $method ) {
+            $body      = http_build_query($body);
+            $headers[] = 'Content-type: application/x-www-form-urlencoded';
+        }
 
-        $headers = [
-            'Content-type: application/x-www-form-urlencoded',
-            'Authorization: Bearer ' . self::$accessToken,
-        ];
+        $headers[] = 'Authorization: Bearer ' . self::$accessToken;
 
-        $response = \Blubrry\Lib\HttpClient::request($method, $url, $body, $headers);
+        $response = \Blubrry\Lib\HttpClient::request($method, $url, $body, $headers, $options);
 
         return json_decode($response, true);
     }
