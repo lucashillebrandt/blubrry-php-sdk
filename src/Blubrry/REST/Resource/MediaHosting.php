@@ -18,7 +18,7 @@ class MediaHosting {
      * @return array The API response.
      */
     public function listPrograms($limit = 100, $start = 0) {
-        $path='/2/media/index.json?limit=' . $limit . '&start=' . $start;
+        $path = '/2/media/index.json?limit=' . $limit . '&start=' . $start;
 
         return \Blubrry\REST\API::request($path, 'GET');
     }
@@ -28,14 +28,14 @@ class MediaHosting {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
+     * @param string $programKeyword
      * @param int $limit
      * @param int $start
      *
      * @return array The API response.
      */
-    public function listUnpublished($program_keyword, $limit = 100, $start = 0) {
-        $path='/2/media/' . $program_keyword . '/index.json?limit=' . $limit . '&start=' . $start;
+    public function listUnpublished($programKeyword, $limit = 100, $start = 0) {
+        $path = '/2/media/' . $programKeyword . '/index.json?limit=' . $limit . '&start=' . $start;
 
         return \Blubrry\REST\API::request($path, 'GET');
     }
@@ -45,14 +45,14 @@ class MediaHosting {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
+     * @param string $programKeyword
      * @param string $mediafile
      * @param bool $publish
      *
      * @return array The API response.
      */
-    public function publishMedia($program_keyword, $mediafile, $publish = false) {
-        $path='/2/media/'. $program_keyword . '/' . $mediafile . '?format=json&publish=' . $publish;
+    public function publishMedia($programKeyword, $mediafile, $publish = false) {
+        $path = '/2/media/'. $programKeyword . '/' . $mediafile . '?format=json&publish=' . $publish;
 
         return \Blubrry\REST\API::request($path, 'GET');
     }
@@ -62,13 +62,13 @@ class MediaHosting {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
+     * @param string $programKeyword
      * @param string $mediafile
      *
      * @return array The API response.
      */
-    public function deleteMedia($program_keyword, $mediafile) {
-        $path='/2/media/' . $program_keyword . '/' . $mediafile . '?format=json';
+    public function deleteMedia($programKeyword, $mediafile) {
+        $path = '/2/media/' . $programKeyword . '/' . $mediafile . '?format=json';
 
         return \Blubrry\REST\API::request($path, 'DELETE');
     }
@@ -78,25 +78,25 @@ class MediaHosting {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
+     * @param string $programKeyword
      * @param string $url
      * @param array $urls
      *
      * @return array The API response.
      */
-    public function addMigrateMediaUrl($program_keyword, $url = null, $urls = null) {
-        $path='/2/media/' . $program_keyword . '/migrate_add.json';
+    public function addMigrateMediaUrl($programKeyword, $url = null, $urls = null) {
+        $path = '/2/media/' . $programKeyword . '/migrate_add.json';
 
-        if (! is_null($url)) {
-            $body = array(
+        if (!is_null($url)) {
+            $body = [
                 'url' => $url,
-            );
+            ];
         }
 
-        if (! empty($urls)) {
-            $body = array(
+        if (!empty($urls)) {
+            $body = [
                 'urls' => $urls,
-            );
+            ];
         }
 
         return \Blubrry\REST\API::request($path, 'POST', $body);
@@ -107,28 +107,28 @@ class MediaHosting {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
+     * @param string $programKeyword
      * @param string $url
      * @param array $urls
      * @param array $ids
      *
      * @return array The API response.
      */
-    public function removeMigrateMediaUrl($program_keyword, $url = null, $urls = null, $ids = null) {
-        $path = '/2/media/' . $program_keyword . '/migrate_remove.json';
+    public function removeMigrateMediaUrl($programKeyword, $url = null, $urls = null, $ids = null) {
+        $path = '/2/media/' . $programKeyword . '/migrate_remove.json';
 
-        if (! is_null($url)) {
-            $body = array(
+        if (!is_null($url)) {
+            $body = [
                 'url' => $url,
                 'ids' => $ids,
-            );
+            ];
         }
 
-        if (! empty($urls)) {
-            $body = array(
+        if (!empty($urls)) {
+            $body = [
                 'urls' => $urls,
                 'ids'  => $ids,
-            );
+            ];
         }
 
         return \Blubrry\REST\API::request($path, 'POST', $body);
@@ -139,7 +139,7 @@ class MediaHosting {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
+     * @param string $programKeyword
      * @param string $status
      * @param int $start
      * @param int $limit
@@ -147,15 +147,15 @@ class MediaHosting {
      *
      * @return array The API response.
      */
-    public function migrateStatus($program_keyword, $status = '', $start = 0, $limit = 100, $ids = null) {
-        $path = '/2/media/' . $program_keyword . '/migrate_status.json';
+    public function migrateStatus($programKeyword, $status = '', $start = 0, $limit = 100, $ids = null) {
+        $path = '/2/media/' . $programKeyword . '/migrate_status.json';
 
-        $body = array(
+        $body = [
             'status' => $status,
-            'start' => $start,
-            'limit' => $limit,
-            'ids' => $ids,
-        );
+            'start'  => $start,
+            'limit'  => $limit,
+            'ids'    => $ids,
+        ];
 
         return \Blubrry\REST\API::request($path, 'POST', $body);
     }
@@ -165,14 +165,21 @@ class MediaHosting {
      *
      * @since 1.0.0
      *
-     * @param string $program_keyword
-     * @param string $media_file
+     * @param string $programKeyword
+     * @param string $mediaFile
      *
      * @return array The API response.
      */
-    public function uploadMedia($program_keyword, $media_file) {
-        $path = '/2/media/' . $program_keyword . '/' . $media_file . '?format=json';
+    public function uploadMedia($programKeyword, $mediaFile) {
+        $path = '/2/media/' . urlencode($programKeyword) . '/' . urlencode($mediaFile['name']) . '?format=json';
 
-        return \Blubrry\REST\API::request($path, 'PUT');
+        $opts = [
+            CURLOPT_BINARYTRANSFER => true,
+            CURLOPT_PUT            => true,
+            CURLOPT_INFILE         => fopen($mediaFile['tmp_name'], 'rb'),
+            CURLOPT_INFILESIZE     => filesize($mediaFile['tmp_name']),
+        ];
+
+        return \Blubrry\REST\API::request($path, 'PUT', null, null, $opts);
     }
 }
