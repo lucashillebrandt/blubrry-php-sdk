@@ -52,9 +52,9 @@ class HttpClient {
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_POST, true);
 
-            /*if (preg_match('/(PUT|DELETE)/', $method)) {
+            if (preg_match('/(PUT|DELETE)/', $method)) {
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-            } */
+            }
 
             if (!empty($queryString)) {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $queryString);
