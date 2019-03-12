@@ -13,7 +13,7 @@ class Auth {
     public function __construct($clientId = null, $clientSecret = null) {
         $this->clientId     = $clientId;
         $this->clientSecret = $clientSecret;
-    } 
+    }
 
     /**
      * Gets Refresh Token.

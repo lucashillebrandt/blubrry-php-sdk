@@ -18,7 +18,7 @@ class MediaHosting {
      * @return array The API response.
      */
     public function listPrograms($limit = 100, $start = 0) {
-        $path = '/2/media/index.json?limit=' . $limit . '&start=' . $start;
+        $path = '/2/media/index.json?limit=' . urlencode($limit) . '&start=' . urlencode($start);
 
         return \Blubrry\REST\API::request($path, 'GET');
     }
@@ -35,7 +35,7 @@ class MediaHosting {
      * @return array The API response.
      */
     public function listUnpublished($programKeyword, $limit = 100, $start = 0) {
-        $path = '/2/media/' . $programKeyword . '/index.json?limit=' . $limit . '&start=' . $start;
+        $path = '/2/media/' . urlencode($programKeyword) . '/index.json?limit=' . urlencode($limit) . '&start=' . urlencode($start);
 
         return \Blubrry\REST\API::request($path, 'GET');
     }
@@ -51,8 +51,8 @@ class MediaHosting {
      *
      * @return array The API response.
      */
-    public function publishMedia($programKeyword, $mediafile, $publish = false) {
-        $path = '/2/media/'. $programKeyword . '/' . $mediafile . '?format=json&publish=' . $publish;
+    public function publishMedia($programKeyword, $mediaFile, $publish = false) {
+        $path = '/2/media/'. urlencode($programKeyword) . '/' . urlencode($mediaFile) . '?format=json&publish=' . urlencode($publish);
 
         return \Blubrry\REST\API::request($path, 'GET');
     }
@@ -67,8 +67,8 @@ class MediaHosting {
      *
      * @return array The API response.
      */
-    public function deleteMedia($programKeyword, $mediafile) {
-        $path = '/2/media/' . $programKeyword . '/' . $mediafile . '?format=json';
+    public function deleteMedia($programKeyword, $mediaFile) {
+        $path = '/2/media/' . urlencode($programKeyword) . '/' . urlencode($mediaFile) . '?format=json';
 
         return \Blubrry\REST\API::request($path, 'DELETE');
     }
@@ -85,7 +85,7 @@ class MediaHosting {
      * @return array The API response.
      */
     public function addMigrateMediaUrl($programKeyword, $url = null, $urls = null) {
-        $path = '/2/media/' . $programKeyword . '/migrate_add.json';
+        $path = '/2/media/' . urlencode($programKeyword) . '/migrate_add.json';
 
         if (!is_null($url)) {
             $body = [
@@ -115,7 +115,7 @@ class MediaHosting {
      * @return array The API response.
      */
     public function removeMigrateMediaUrl($programKeyword, $url = null, $urls = null, $ids = null) {
-        $path = '/2/media/' . $programKeyword . '/migrate_remove.json';
+        $path = '/2/media/' . urlencode($programKeyword) . '/migrate_remove.json';
 
         if (!is_null($url)) {
             $body = [
@@ -148,7 +148,7 @@ class MediaHosting {
      * @return array The API response.
      */
     public function migrateStatus($programKeyword, $status = '', $start = 0, $limit = 100, $ids = null) {
-        $path = '/2/media/' . $programKeyword . '/migrate_status.json';
+        $path = '/2/media/' . urlencode($programKeyword) . '/migrate_status.json';
 
         $body = [
             'status' => $status,

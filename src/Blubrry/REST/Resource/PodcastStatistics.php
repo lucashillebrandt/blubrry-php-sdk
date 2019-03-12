@@ -19,19 +19,19 @@ class PodcastStatistics {
      * @return array The API response.
      */
     public function summary($programKeyword, $month = null, $year = null) {
-        $path = '/2/stats/' . $programKeyword . '/summary.json';
+        $path = '/2/stats/' . urlencode($programKeyword) . '/summary.json';
         $qs = '';
 
-        if (! is_null($month)) {
-            $qs += '?month=' . $month;
+        if (!is_null($month)) {
+            $qs += '?month=' . urlencode($month);
         }
 
-        if (! is_null($year)) {
-            $qs += '?year=' . $year;
+        if (!is_null($year)) {
+            $qs += '?year=' . urlencode($year);
         }
 
-        if (! is_null($year) && ! is_null($month)) {
-            $qs = '?month=' . $month . '&year=' . $year;
+        if (!is_null($year) && !is_null($month)) {
+            $qs = '?month=' . urlencode($month) . '&year=' . urlencode($year);
         }
 
         return \Blubrry\REST\API::request($path . $qs, 'GET');
@@ -48,7 +48,7 @@ class PodcastStatistics {
      * @return array The API response.
      */
     public function totals($programKeyword, $params) {
-        $path = '/2/stats/' . $programKeyword . '/totals.json';
+        $path = '/2/stats/' . urlencode($programKeyword) . '/totals.json';
 
         if (empty($params)) {
             return false;

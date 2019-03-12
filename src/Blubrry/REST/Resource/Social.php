@@ -18,7 +18,7 @@ class Social {
      * @return array The API response.
      */
     public function updateListing($programKeyword, $params) {
-        $path = '/2/social/' . $programKeyword . '/update-listing.json';
+        $path = '/2/social/' . urlencode($programKeyword) . '/update-listing.json';
         $body = [];
 
         $required = [
@@ -66,10 +66,10 @@ class Social {
      * @return array The API response.
      */
     public function getSocial($programKeyword, $params) {
-        $path = '/2/social/' . $programKeyword . '/get-social-options.json';
+        $path = '/2/social/' . urlencode($programKeyword) . '/get-social-options.json';
 
         $socialOptions = [
-           'social-options' => [], 
+           'social-options' => [],
         ];
 
         $socialTypes    = ['twitter', 'youtube', 'facebook'];
@@ -161,7 +161,7 @@ class Social {
      * @return array The API response.
      */
     public function postSocial($programKeyword, $body) {
-        $path = '/2/social/' . $programKeyword . '/post.json';
+        $path = '/2/social/' . urlencode($programKeyword) . '/post.json';
     
         $required = [
             'podcast-id',
@@ -182,13 +182,13 @@ class Social {
 
         if ('twitter' == $type) {
             $social = ['content'];
-        } else if ('facebook' == $type) {
+        } elseif ('facebook' == $type) {
             $social = [
                 "title-$body['social-id']",
                 "description-$body['social-id']",
                 "destination-$body['social-id']",
             ];
-        } else if ('youtube' == $type) {
+        } elseif ('youtube' == $type) {
             $social = [
                 "title-$body['social-id']",
                 "description-$body['social-id']",
